@@ -3,7 +3,7 @@
 
 EDA by Far
 
-[EDA](https://colab.research.google.com/drive/1_GprDeHo8zVY_5ZHRrUMAKxvoMGGTLze)
+[EDA](https://drive.google.com/file/d/1YJwH62kW2fRnqUCo0DITjU22YagaKPLj/view?usp=sharing)
 
 
 ## Architecture Diagram

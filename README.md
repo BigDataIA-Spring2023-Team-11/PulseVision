@@ -7,4 +7,4 @@ EDA by Far
 
 
 ## Architecture Diagram
-![image](https://github.com/BigDataIA-Spring2023-Team-11/Ad-Vantage/blob/main/architecture_diagram/ad-vantage_architecture_diagram.png)
+![image](https://github.com/BigDataIA-Spring2023-Team-11/PulseVision/blob/main/project.png)

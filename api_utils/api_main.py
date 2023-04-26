@@ -11,8 +11,8 @@ MODEL_PATH = path+"/model/rf_model_to_predict_heartDisease"
 app = FastAPI()
 
 @app.post("/get_predictions")
-def get_predictions():
-    df =pd.read_csv("streamlit/data/df.csv")
+def get_predictions(df):
+    # df =pd.read_csv("streamlit/data/df.csv")
     log_model = pickle.load(open(MODEL_PATH, "rb"))
     prediction = log_model.predict(df)
     prediction_prob = log_model.predict_proba(df)

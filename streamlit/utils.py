@@ -33,6 +33,7 @@ def global_interpretibility_plot():
 """
 """
 def get_answers_to_ques(ques):
+    load_dotenv()
     openai.api_key = os.getenv("OPENAI_API_KEY")
     print(openai.api_key,ques)
     response = openai.Completion.create(

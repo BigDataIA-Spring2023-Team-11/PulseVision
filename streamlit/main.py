@@ -388,7 +388,7 @@ def predict_heart_disease():
 
 ########################################################################################
 def analytics():
-    st.image("images/global_interpret.png")
+    st.image(f"{path}/images/global_interpret.png")
 
 def bmi_calculator():
     # Set the title of the app

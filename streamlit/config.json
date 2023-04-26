@@ -1,0 +1,5 @@
+{
+  "endpoints": {
+    "predict": "http://localhost:8000/get_predictions"
+  }
+}

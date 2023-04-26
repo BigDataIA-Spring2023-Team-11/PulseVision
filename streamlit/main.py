@@ -33,10 +33,7 @@ else:
 if 'predict' not in st.session_state:
     st.session_state.predict = False
 path = os.path.dirname(__file__)
-with open('config.json', 'r') as f:
-    config = json.load(f)
 
-endpoint = config['endpoints']['predict']
 
 st.set_page_config(
     layout=layout,
@@ -126,6 +123,10 @@ def st_shap(plot, height=None):
     components.html(shap_html, height=height)
 
 def predict_heart_disease():
+    with open('config.json', 'r') as f:
+        config = json.load(f)
+
+    endpoint = config['endpoints']['predict']
     add_bg_from_local(image_file)
 
     st.title("Heart Disease Prediction App")
@@ -420,6 +421,7 @@ def bmi_calculator():
 
 
 if __name__ == '__main__':
+
     selected_operation = st.sidebar.radio("Select a Operation",  ["Homepage", "Predict Heart Health", "Analytics","BMI Calculator"])
 
     if selected_operation == "Predict Heart Health":

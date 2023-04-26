@@ -1,1 +1,5 @@
 venv_run
+/venv/
+/great_expectations/plugins/
+/great_expectations/profilers/
+/great_expectations/checkpoints/

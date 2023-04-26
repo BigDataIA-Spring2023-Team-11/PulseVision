@@ -1,0 +1,2636 @@
+{
+  "evaluation_parameters": {},
+  "meta": {
+    "active_batch_definition": {
+      "batch_identifiers": {},
+      "data_asset_name": "brfssCleaned.csv",
+      "data_connector_name": "default_inferred_data_connector_name",
+      "datasource_name": "heartCleaned_datasource"
+    },
+    "batch_markers": {
+      "ge_load_time": "20230425T230004.711999Z",
+      "pandas_data_fingerprint": "d0bfb4d713fa26d95c0f0d8f56f2ffcd"
+    },
+    "batch_spec": {
+      "path": "/Users/akshaysawant/Downloads/PulseVision/great_expectations/data/brfssCleaned.csv"
+    },
+    "checkpoint_id": null,
+    "checkpoint_name": "heart_checkpoint",
+    "expectation_suite_name": "heartCleaned_suite",
+    "great_expectations_version": "0.15.49",
+    "run_id": {
+      "run_name": "20230425-190004-my-run-name-template",
+      "run_time": "2023-04-25T19:00:04.695175+00:00"
+    },
+    "validation_id": null,
+    "validation_time": "20230425T230004.881672Z"
+  },
+  "results": [
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_table_row_count_to_be_between",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "max_value": 303,
+          "min_value": 27
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {},
+              "metric_name": "table.row_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "observed_value": 39452
+      },
+      "success": false
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_table_columns_to_match_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column_set": [
+            "Diabetes",
+            "Age",
+            "Race",
+            "Stroke",
+            "BMI",
+            "HeavyAlcoholConsump",
+            "Fruits",
+            "PhysicalHlth",
+            "GeneralHealth",
+            "Education",
+            "Sex",
+            "PhysicalActivity",
+            "Smoker",
+            "AnyHealthcare",
+            "HighBP",
+            "HighCholesterol",
+            "HeartDiseaseorAttack",
+            "Asthama",
+            "DifficultyWalk",
+            "KidneyDisease",
+            "Obese",
+            "Veggies",
+            "SkinCancer",
+            "NoDocbcozCost",
+            "CholesterolCheck",
+            "Income",
+            "MentalHealth"
+          ]
+        },
+        "meta": {
+          "profiler_details": {
+            "success_ratio": 1.0
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "observed_value": [
+          "HeartDiseaseorAttack",
+          "HighBP",
+          "HighCholesterol",
+          "CholesterolCheck",
+          "BMI",
+          "Smoker",
+          "Stroke",
+          "Diabetes",
+          "PhysicalActivity",
+          "Fruits",
+          "Veggies",
+          "HeavyAlcoholConsump",
+          "NoDocbcozCost",
+          "GeneralHealth",
+          "MentalHealth",
+          "PhysicalHlth",
+          "DifficultyWalk",
+          "Sex",
+          "Age",
+          "Education",
+          "Income",
+          "AnyHealthcare",
+          "Asthama",
+          "SkinCancer",
+          "Race",
+          "KidneyDisease",
+          "Obese"
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Diabetes"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "Diabetes"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_most_common_value_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Diabetes",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "observed_value": [
+          0.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Age"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "Age"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Age",
+          "value_set": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 1595,
+              "value": 1.0
+            },
+            {
+              "count": 2214,
+              "value": 2.0
+            },
+            {
+              "count": 3441,
+              "value": 3.0
+            },
+            {
+              "count": 4327,
+              "value": 4.0
+            },
+            {
+              "count": 4761,
+              "value": 5.0
+            },
+            {
+              "count": 4761,
+              "value": 6.0
+            },
+            {
+              "count": 5517,
+              "value": 7.0
+            },
+            {
+              "count": 5918,
+              "value": 8.0
+            },
+            {
+              "count": 6918,
+              "value": 9.0
+            }
+          ]
+        },
+        "observed_value": [
+          1.0,
+          2.0,
+          3.0,
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_most_common_value_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Age",
+          "value_set": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "observed_value": [
+          9.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Race"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "Race"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Race",
+          "value_set": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 28649,
+              "value": 1.0
+            },
+            {
+              "count": 3174,
+              "value": 2.0
+            },
+            {
+              "count": 1491,
+              "value": 3.0
+            },
+            {
+              "count": 946,
+              "value": 4.0
+            },
+            {
+              "count": 3441,
+              "value": 5.0
+            },
+            {
+              "count": 1751,
+              "value": 6.0
+            }
+          ]
+        },
+        "observed_value": [
+          1.0,
+          2.0,
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_most_common_value_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Race",
+          "value_set": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "observed_value": [
+          1.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Stroke"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "Stroke"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Stroke",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 38689,
+              "value": 0.0
+            },
+            {
+              "count": 763,
+              "value": 1.0
+            }
+          ]
+        },
+        "observed_value": [
+          0.0,
+          1.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "BMI"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "BMI"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_min_to_be_between",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "BMI",
+          "max_value": 99,
+          "min_value": 0,
+          "strict_max": false,
+          "strict_min": false
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "BMI"
+              },
+              "metric_name": "column.min",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "observed_value": 12.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_median_to_be_between",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "BMI",
+          "max_value": 99,
+          "min_value": 0,
+          "strict_max": false,
+          "strict_min": false
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "BMI"
+              },
+              "metric_name": "column.median",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "observed_value": 28.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "HeavyAlcoholConsump"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "HeavyAlcoholConsump"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "HeavyAlcoholConsump",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 36426,
+              "value": 0.0
+            },
+            {
+              "count": 3026,
+              "value": 1.0
+            }
+          ]
+        },
+        "observed_value": [
+          0.0,
+          1.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_most_common_value_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "HeavyAlcoholConsump",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "observed_value": [
+          0.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Fruits"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "Fruits"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Fruits",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 15780,
+              "value": 0.0
+            },
+            {
+              "count": 23672,
+              "value": 1.0
+            }
+          ]
+        },
+        "observed_value": [
+          0.0,
+          1.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "PhysicalHlth"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "PhysicalHlth"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_min_to_be_between",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "PhysicalHlth",
+          "max_value": 30,
+          "min_value": 0,
+          "strict_max": false,
+          "strict_min": false
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "PhysicalHlth"
+              },
+              "metric_name": "column.min",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "observed_value": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_median_to_be_between",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "PhysicalHlth",
+          "max_value": 30,
+          "min_value": 0,
+          "strict_max": false,
+          "strict_min": false
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "PhysicalHlth"
+              },
+              "metric_name": "column.median",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "observed_value": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "GeneralHealth"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "GeneralHealth"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "GeneralHealth",
+          "value_set": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 8418,
+              "value": 1.0
+            },
+            {
+              "count": 15336,
+              "value": 2.0
+            },
+            {
+              "count": 11355,
+              "value": 3.0
+            },
+            {
+              "count": 3417,
+              "value": 4.0
+            },
+            {
+              "count": 926,
+              "value": 5.0
+            }
+          ]
+        },
+        "observed_value": [
+          1.0,
+          2.0,
+          3.0,
+          4.0,
+          5.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_most_common_value_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "GeneralHealth",
+          "value_set": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "observed_value": [
+          2.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Education"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "Education"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Education",
+          "value_set": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 25,
+              "value": 1.0
+            },
+            {
+              "count": 340,
+              "value": 2.0
+            },
+            {
+              "count": 1166,
+              "value": 3.0
+            },
+            {
+              "count": 8442,
+              "value": 4.0
+            },
+            {
+              "count": 10915,
+              "value": 5.0
+            },
+            {
+              "count": 18564,
+              "value": 6.0
+            }
+          ]
+        },
+        "observed_value": [
+          1.0,
+          2.0,
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Sex"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "Sex"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Sex",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 20920,
+              "value": 0.0
+            },
+            {
+              "count": 18532,
+              "value": 1.0
+            }
+          ]
+        },
+        "observed_value": [
+          0.0,
+          1.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "PhysicalActivity"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "PhysicalActivity"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "PhysicalActivity",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 6931,
+              "value": 0.0
+            },
+            {
+              "count": 32521,
+              "value": 1.0
+            }
+          ]
+        },
+        "observed_value": [
+          0.0,
+          1.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Smoker"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "Smoker"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Smoker",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 24504,
+              "value": 0.0
+            },
+            {
+              "count": 14948,
+              "value": 1.0
+            }
+          ]
+        },
+        "observed_value": [
+          0.0,
+          1.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "AnyHealthcare"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "AnyHealthcare"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "AnyHealthcare",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 2397,
+              "value": 0.0
+            },
+            {
+              "count": 37055,
+              "value": 1.0
+            }
+          ]
+        },
+        "observed_value": [
+          0.0,
+          1.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "HighBP"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "HighBP"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "HighBP",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 28089,
+              "value": 0.0
+            },
+            {
+              "count": 11363,
+              "value": 1.0
+            }
+          ]
+        },
+        "observed_value": [
+          0.0,
+          1.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "HighCholesterol"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "HighCholesterol"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "HighCholesterol",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 27951,
+              "value": 0.0
+            },
+            {
+              "count": 11501,
+              "value": 1.0
+            }
+          ]
+        },
+        "observed_value": [
+          0.0,
+          1.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "HeartDiseaseorAttack"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "HeartDiseaseorAttack"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_most_common_value_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "HeartDiseaseorAttack",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "observed_value": [
+          0.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Asthama"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "Asthama"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Asthama",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 33784,
+              "value": 0.0
+            },
+            {
+              "count": 5668,
+              "value": 1.0
+            }
+          ]
+        },
+        "observed_value": [
+          0.0,
+          1.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "DifficultyWalk"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "DifficultyWalk"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "DifficultyWalk",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 35758,
+              "value": 0.0
+            },
+            {
+              "count": 3694,
+              "value": 1.0
+            }
+          ]
+        },
+        "observed_value": [
+          0.0,
+          1.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "KidneyDisease"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "KidneyDisease"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "KidneyDisease",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 38759,
+              "value": 0.0
+            },
+            {
+              "count": 693,
+              "value": 1.0
+            }
+          ]
+        },
+        "observed_value": [
+          0.0,
+          1.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Obese"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "Obese"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Obese",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 11181,
+              "value": 0.0
+            },
+            {
+              "count": 28271,
+              "value": 1.0
+            }
+          ]
+        },
+        "observed_value": [
+          0.0,
+          1.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Veggies"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "Veggies"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Veggies",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 6242,
+              "value": 0.0
+            },
+            {
+              "count": 33210,
+              "value": 1.0
+            }
+          ]
+        },
+        "observed_value": [
+          0.0,
+          1.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "SkinCancer"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "SkinCancer"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "SkinCancer",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 37520,
+              "value": 0.0
+            },
+            {
+              "count": 1932,
+              "value": 1.0
+            }
+          ]
+        },
+        "observed_value": [
+          0.0,
+          1.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "NoDocbcozCost"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "NoDocbcozCost"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "NoDocbcozCost",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 36102,
+              "value": 0.0
+            },
+            {
+              "count": 3350,
+              "value": 1.0
+            }
+          ]
+        },
+        "observed_value": [
+          0.0,
+          1.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "CholesterolCheck"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "CholesterolCheck"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "CholesterolCheck",
+          "value_set": [
+            0,
+            1
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 2100,
+              "value": 0.0
+            },
+            {
+              "count": 37352,
+              "value": 1.0
+            }
+          ]
+        },
+        "observed_value": [
+          0.0,
+          1.0
+        ]
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Income"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "Income"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "Income",
+          "value_set": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        "meta": {
+          "UserConfigurableProfiler": {
+            "confidence": "very low"
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 941,
+              "value": 1.0
+            },
+            {
+              "count": 849,
+              "value": 2.0
+            },
+            {
+              "count": 1146,
+              "value": 3.0
+            },
+            {
+              "count": 1672,
+              "value": 4.0
+            },
+            {
+              "count": 3902,
+              "value": 5.0
+            },
+            {
+              "count": 4641,
+              "value": 6.0
+            },
+            {
+              "count": 6600,
+              "value": 7.0
+            },
+            {
+              "count": 6208,
+              "value": 8.0
+            },
+            {
+              "count": 7311,
+              "value": 9.0
+            },
+            {
+              "count": 3145,
+              "value": 10.0
+            },
+            {
+              "count": 3037,
+              "value": 11.0
+            }
+          ]
+        },
+        "observed_value": [
+          1.0,
+          2.0,
+          3.0,
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0,
+          9.0,
+          10.0,
+          11.0
+        ]
+      },
+      "success": false
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "MentalHealth"
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "MentalHealth"
+              },
+              "metric_name": "column_values.nonnull.unexpected_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "element_count": 39452,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_min_to_be_between",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "MentalHealth",
+          "max_value": 30,
+          "min_value": 0,
+          "strict_max": false,
+          "strict_min": false
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "MentalHealth"
+              },
+              "metric_name": "column.min",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "observed_value": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_median_to_be_between",
+        "kwargs": {
+          "batch_id": "4843b1ac85f39dcbb0aecf74083084d9",
+          "column": "MentalHealth",
+          "max_value": 30,
+          "min_value": 0,
+          "strict_max": false,
+          "strict_min": false
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {
+                "column": "MentalHealth"
+              },
+              "metric_name": "column.median",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 1
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "observed_value": 0.0
+      },
+      "success": true
+    }
+  ],
+  "statistics": {
+    "evaluated_expectations": 63,
+    "success_percent": 96.82539682539682,
+    "successful_expectations": 61,
+    "unsuccessful_expectations": 2
+  },
+  "success": false
+}

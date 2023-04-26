@@ -1,3 +1,5 @@
+import io
+
 import pandas as pd
 import numpy as np
 import streamlit as st
@@ -6,11 +8,18 @@ import pickle
 import sklearn
 import getpass
 from PIL import Image
-
-
+import shap
+import pickle
 # all other imports
 import os
 # from streamlit_elements import Elements
+import streamlit_shap as st_shap
+import streamlit as st
+import shap
+import streamlit.components.v1 as components
+import streamlit_shap
+
+from utils import get_answers_to_ques
 
 ###############################################################################
 
@@ -19,7 +28,8 @@ if "widen" not in st.session_state:
     layout = "centered"
 else:
     layout = "wide" if st.session_state.widen else "centered"
-
+# if 'Explain' not in st.session_state:
+#     st.session_state.button_clicked = False
 path = os.path.dirname(__file__)
 
 st.set_page_config(
@@ -66,6 +76,7 @@ def add_bg_from_local(image_file):
     unsafe_allow_html=True
     )
 
+
 def featuresTransformations_to_df(agecat_key, bmi_key, gender, race, smoking, alcohol, health_key, diabetic, asthma, stroke, skincancer, kidneydisease) -> pd.DataFrame:
     age_dict = {'18-24':0, '25-29':1,'30-34':2,'35-39':3,'40-44':4,'45-49':5,'50-54':6,'55-59':7,'60-64':8,'65-69':9,'70-74':10,'75-79':11,'80 or older':12}
     health_dict = {'Poor':0,'Fair':1,'Good':2,'Very good':3,'Excellent':4}
@@ -105,7 +116,9 @@ def featuresTransformations_to_df(agecat_key, bmi_key, gender, race, smoking, al
     return df
 
 ###############################################################################
-
+def st_shap(plot, height=None):
+    shap_html = f"<head>{shap.getjs()}</head><body style='background-color: white'>{plot.html()}</body>"
+    components.html(shap_html, height=height)
 
 def predict_heart_disease():
     add_bg_from_local(image_file)
@@ -232,23 +245,96 @@ def predict_heart_disease():
         likelihood = (100*(prediction_prob[0][1]/prediction_prob[0][0]))
         # st.write(f"Model Prediction {prediction} and its probability {prediction_prob}")
 
+
         if prediction ==0:
             st.subheader(f"You are Healthy💕! - Dr. RandomForest.")
-            st.write(f"You are LESS prone to Heart Disease as the probability of Heart Disease in you is just {100*prediction_prob[0][1].round(1)}%.")
+            st.write(f"You are LESS prone to Heart Disease as the probability of Heart Disease in you is just {(100*prediction_prob[0][1]).round(0)}%.")
             col1, col2 = st.columns(2)
             with col1:
                 st.markdown("![Good](https://media.giphy.com/media/trhFX3qdAPF3GjYPMt/giphy.gif)")
 
         else:
             st.subheader("You are not Healthy 😐, better go for a checkup - Dr. RandomForest.")
-            st.write(f"You are Highly prone to Heart Disease as the probability of Heart Disease in you is {100*prediction_prob[0][1].round(1)}% 😲.")
+            st.write(f"You are Highly prone to Heart Disease as the probability of Heart Disease in you is {(100*prediction_prob[0][1]).round(0)}% 😲.")
             col1, col2 = st.columns(2)
             with col1:
                 st.markdown("![Bad](https://media4.giphy.com/media/zaMldSPOkLNu9iYgZ6/giphy.gif?cid=29caca75yzsr24jwjoy2f8ze5azrdqka0mlt7untywajjgme&rid=giphy.gif&ct=g)")
 
 
 
+        st.markdown("------------------------------------------------------------------------------")
+        st.header("Interpreting the result")
+        shap.initjs()
+        filename = "model/rf_model_to_predict_heartDisease"
+        with open(filename, 'rb') as f:
+            model = pickle.load(f)
+        # df_test = pd.read_csv("data/test_dataset.csv")
+        # df_test = df_test.drop(df_test.columns[0], axis=1)
+        explainer = shap.TreeExplainer(model)
+        shap_values = explainer.shap_values(df)
 
+        # shap.plots.force(explainer.expected_value[1], shap_values[1], df)
+        # Call the function to plot
+
+        ##renaming columns
+        col_names = {"GenHealth": "General_Health","KidneyDisease":"Kidney_Disease","Diabetic_Yes":"Diabetic","SkinCancer":"Skin_Cancer","AgeCategory":"Age","AlcoholDrinking":"Alcoholic"}
+
+        df = df.rename(columns=col_names)
+
+        st_shap(shap.force_plot(explainer.expected_value[1], shap_values[1], df))
+        shap_df = pd.DataFrame(shap_values[1]) ##shap values are 2d array in which 1st position has shap values of heart disease(YES)
+        shap_df.columns = df.columns
+        # Shap Values to a DataFrame
+
+        tdf = shap_df.T
+        tdf = tdf.reset_index()
+        tdf.columns = ['features', 'shap_values']
+        # tdf['abs_ShapValues'] = abs(tdf['shap_values'])
+        tdf = tdf.sort_values('shap_values', ascending=False).reset_index(drop=True)
+        tdf
+        causing_heartdisease = tdf["features"].unique().tolist()[:3]
+        t = tdf["features"].unique().tolist()
+        st.markdown('<p style="color:black;font-size:30px">Top 3 factors indicating that they have the strongest impact on the model prediction:</p>', unsafe_allow_html=True)
+        st.markdown(f'<p style="color:white;font-size:25px">1. {causing_heartdisease[0]}</p>', unsafe_allow_html=True)
+        st.markdown(f'<p style="color:white;font-size:25px">2. {causing_heartdisease[1]}</p>', unsafe_allow_html=True)
+        st.markdown(f'<p style="color:white;font-size:25px">3. {causing_heartdisease[2]}</p>', unsafe_allow_html=True)
+
+        st.markdown(
+            '<p style="color:black;font-size:30px">Three factors that are reducing the chances of heart disease for you:</p>',
+            unsafe_allow_html=True)
+        st.markdown(f'<p style="color:white;font-size:25px">1. {t[-1]}</p>', unsafe_allow_html=True)
+        st.markdown(f'<p style="color:white;font-size:25px">2. {t[-2]}</p>', unsafe_allow_html=True)
+        st.markdown(f'<p style="color:white;font-size:25px">3. {t[-3]}</p>', unsafe_allow_html=True)
+        st.markdown("")
+        st.markdown("")
+        st.markdown("")
+        st.markdown("")
+        st.markdown("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+        st.markdown("")
+        st.markdown("")
+        st.markdown("")
+        st.markdown(
+            '<p style="color:black;font-size:30px">Here is what you can do to improve your heart health!</p>',
+            unsafe_allow_html=True)
+
+        if "General_Health" in causing_heartdisease:
+            food_habits = ["junk","greens","fibre rich","protein","balanced diet"]
+            exe = ["I exercise regularly","I exercise few days a week","I do not exercise"]
+            food = st.selectbox("food Habits",food_habits)
+            exercise = st.selectbox("Physical Activity",exe)
+            with st.expander("To Improve General Health"):
+                res = get_answers_to_ques(f"my diet includes lot of {food} on regular basis, and {exercise}, How to improve general health and reduce the risk of heart disease? ")
+                st.write(res)
+        if "Kidney_Disease" in causing_heartdisease:
+            with st.expander("Kidney Disease"):
+                res_kidney = get_answers_to_ques("What is the effect of kidney disease on heart disease and how to get rid of kidney disease")
+                st.markdown(res_kidney)
+        s = get_answers_to_ques("I already got a heart stroke and what can be done to avoid heart strokes in future. help me with detailed precautions")
+        st.markdown(s)
+
+########################################################################################
+def analytics():
+    st.image("images/global_interpret.png")
 
 if __name__ == '__main__':
     selected_operation = st.sidebar.radio("Select a Operation",  ["Homepage", "Predict Heart Health", "Analytics"])
@@ -281,5 +367,4 @@ if __name__ == '__main__':
         st.markdown('')
         st.markdown('')
         st.markdown('')
-        # question_answering()
-
+        analytics()

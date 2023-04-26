@@ -258,20 +258,19 @@ def predict_heart_disease():
             # df_to_cal = featuresTransformations_to_df(agecat_key, bmi_key, gender, race, smoking, alcohol, health_key, diabetic, asthma, stroke, skincancer, kidneydisease)
             # df.to_csv("data/df.csv")
             ############ commented for API call
-            prediction = log_model.predict(df)
-            prediction_prob = log_model.predict_proba(df)
-            likelihood = (100*(prediction_prob[0][1]/prediction_prob[0][0]))
-            percentage = (100*prediction_prob[0][1]).round(0)
-            # st.write(f"Model Prediction {prediction} and its probability {prediction_prob}")
+            # prediction = log_model.predict(df)
+            # prediction_prob = log_model.predict_proba(df)
+            # likelihood = (100*(prediction_prob[0][1]/prediction_prob[0][0]))
+            # percentage = (100*prediction_prob[0][1]).round(0)
             #############
 
             # url_p = "http://localhost:8000/get_predictions"
 
             ########
             # Send a POST request to the API
-            # response = requests.post(endpoint, files={'data': df.to_csv(index=False)})
-            # prediction = response.json().get("prediction")
-            # percentage = response.json().get("percentage")
+            response = requests.post(endpoint, files={'data': df.to_csv(index=False)})
+            prediction = response.json().get("prediction")
+            percentage = response.json().get("percentage")
             ########
             if prediction ==0:
                 st.subheader(f"You are Healthy💕! - Dr. RandomForest.")

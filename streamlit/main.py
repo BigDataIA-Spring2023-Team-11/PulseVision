@@ -292,7 +292,8 @@ def predict_heart_disease():
             st.markdown("------------------------------------------------------------------------------")
             st.header("Interpreting the result")
             shap.initjs()
-            filename = "model/rf_model_to_predict_heartDisease"
+            path = os.path.dirname(__file__)
+            filename = path+"model/rf_model_to_predict_heartDisease"
             with open(filename, 'rb') as f:
                 model = pickle.load(f)
             # df_test = pd.read_csv("data/test_dataset.csv")

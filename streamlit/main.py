@@ -261,17 +261,17 @@ def predict_heart_disease():
             # prediction = log_model.predict(df)
             # prediction_prob = log_model.predict_proba(df)
             # likelihood = (100*(prediction_prob[0][1]/prediction_prob[0][0]))
-            # # st.write(f"Model Prediction {prediction} and its probability {prediction_prob}")
+            # percentage = (100*prediction_prob[0][1]).round(0)
             #############
 
             # url_p = "http://localhost:8000/get_predictions"
 
-
+            ########
             # Send a POST request to the API
             response = requests.post(endpoint, files={'data': df.to_csv(index=False)})
             prediction = response.json().get("prediction")
             percentage = response.json().get("percentage")
-
+            ########
             if prediction ==0:
                 st.subheader(f"You are Healthy💕! - Dr. RandomForest.")
                 st.write(f"You are LESS prone to Heart Disease as the probability of Heart Disease in you is {percentage}%.")
@@ -291,7 +291,7 @@ def predict_heart_disease():
             st.markdown("------------------------------------------------------------------------------")
             st.header("Interpreting the result")
             shap.initjs()
-            filename = "model/rf_model_to_predict_heartDisease"
+            filename = path+"/model/rf_model_to_predict_heartDisease"
             with open(filename, 'rb') as f:
                 model = pickle.load(f)
             # df_test = pd.read_csv("data/test_dataset.csv")
@@ -387,7 +387,7 @@ def predict_heart_disease():
 
 ########################################################################################
 def analytics():
-    st.image("images/global_interpret.png")
+    st.image(f"{path}/images/global_interpret.png")
 
 def bmi_calculator():
     # Set the title of the app

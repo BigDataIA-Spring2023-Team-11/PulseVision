@@ -19,7 +19,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: DOCKER_USERNAME/api_test:v2
+        tags: ukeyb/api_test:v2
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_SECRET }}

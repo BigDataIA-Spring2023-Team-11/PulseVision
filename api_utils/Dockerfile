@@ -7,7 +7,7 @@ RUN pip install --upgrade pip
 WORKDIR /app
 # Change working dir to app
 
-COPY ./requirements.txt /api_main.py
+COPY /requirements.txt /api_main.py
 
 #COPY ../sql_util /app/sql_util
 

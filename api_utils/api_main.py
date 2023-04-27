@@ -37,13 +37,27 @@ async def predict(userinput: UserInput) -> dict:
         # read the input dict into json and then into df
         df = pd.DataFrame([json.loads(userinput.json())])
         # predict
-        prediction_prob = model.predict_proba(df)
+        # prediction = model.predict(df)
+        prob = model.predict_proba(df)
+        prediction = model.predict(df)
+        print(f"{prediction[0]} --------------------------------------------------------000000")
+        # prob = model.predict_proba(df)
+
         response = {}
-        # first prediction value rounded off
-        response['value_0'] = (prediction_prob[0][0] * 100 ).round(0)
-        # second prediction value rounded off
-        response['value_1'] = (prediction_prob[0][1] * 100 ).round(0)
+        # # # first prediction value rounded off
+        # response['value_0'] = (prob[0][0] * 100 ).round(0)
+        # # second prediction value rounded off
+        response['prediction_probability'] = (prob[0][1] * 100 ).round(0)
+        response['prediction'] = int(prediction[0])
         return response
+
+        # prediction = log_model.predict(df)
+        # prediction_prob = log_model.predict_proba(df)
+        # pred_prob = (100 * prob[0][1]).round(0)
+        # return {"prediction": prediction, "prediction_probability": pred_prob}
+
+
+
     except:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Cannot Predict, Try again")
 

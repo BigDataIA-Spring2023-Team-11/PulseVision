@@ -2,14 +2,9 @@ import io
 import json
 
 import pandas as pd
-import numpy as np
-import streamlit as st
+
 import base64
-import pickle
-import sklearn
-import getpass
-from PIL import Image
-import shap
+
 import pickle
 # all other imports
 import requests
@@ -19,7 +14,6 @@ import streamlit_shap as st_shap
 import streamlit as st
 import shap
 import streamlit.components.v1 as components
-import streamlit_shap
 
 from utils import get_answers_to_ques
 
@@ -269,19 +263,20 @@ def predict_heart_disease():
             ########
             # Send a POST request to the API
             payload = json.dumps({
-                "AgeCategory": 0,
-                "Stroke": 0,
-                "Diabetic_Yes": 0,
-                "KidneyDisease": 0,
-                "Smoking": 0,
-                "SkinCancer": 0,
-                "Is_Male": 0,
-                "BMI": 0,
-                "Asthma": 0,
-                "Race_White": 0,
-                "AlcoholDrinking": 0,
-                "GenHealth": 0
+                "AgeCategory": int(df.AgeCategory[0]),
+                "Stroke": int(df.Stroke[0]),
+                "Diabetic_Yes": int(df.Diabetic_Yes[0]),
+                "KidneyDisease": int(df.KidneyDisease[0]),
+                "Smoking": int(df.Smoking[0]),
+                "SkinCancer": int(df.SkinCancer[0]),
+                "Is_Male": int(df.Is_Male[0]),
+                "BMI": int(df.BMI[0]),
+                "Asthma": int(df.Asthma[0]),
+                "Race_White": int(df.Race_White[0]),
+                "AlcoholDrinking": int(df.AlcoholDrinking[0]),
+                "GenHealth": int(df.GenHealth[0])
             })
+            st.markdown(payload)
             headers = {
                 'Content-Type': 'application/json'
             }
@@ -289,27 +284,34 @@ def predict_heart_disease():
             st.markdown(url)
             response = requests.request("POST", url, headers=headers, data=payload)
             st.markdown(response)
+
             if response.status_code == 200:
                 json_data = json.loads(response.text)
                 st.json(json_data)
-            else:
-                st.text("Invalid Inputs ⚠️")
-            prediction = response.json().get("prediction")
-            percentage = response.json().get("percentage")
-            # ########
-            if prediction ==0:
-                st.subheader(f"You are Healthy💕! - Dr. RandomForest.")
-                st.write(f"You are LESS prone to Heart Disease as the probability of Heart Disease in you is {percentage}%.")
-                col1, col2 = st.columns(2)
-                with col1:
-                    st.markdown("![Good](https://media.giphy.com/media/trhFX3qdAPF3GjYPMt/giphy.gif)")
+
+                prediction = response.json().get("prediction")
+                percentage = response.json().get("prediction_proba")
+                if prediction == 0:
+                    st.subheader(f"You are Healthy💕! - Dr. RandomForest.")
+                    st.write(
+                        f"You are LESS prone to Heart Disease as the probability of Heart Disease in you is {percentage}%.")
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.markdown("![Good](https://media.giphy.com/media/trhFX3qdAPF3GjYPMt/giphy.gif)")
+
+                else:
+                    st.subheader("You are not Healthy 😐, better go for a checkup - Dr. RandomForest.")
+                    st.write(
+                        f"You are Highly prone to Heart Disease as the probability of Heart Disease in you is {percentage}% 😲.")
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.markdown(
+                            "![Bad](https://media4.giphy.com/media/zaMldSPOkLNu9iYgZ6/giphy.gif?cid=29caca75yzsr24jwjoy2f8ze5azrdqka0mlt7untywajjgme&rid=giphy.gif&ct=g)")
+
 
             else:
-                st.subheader("You are not Healthy 😐, better go for a checkup - Dr. RandomForest.")
-                st.write(f"You are Highly prone to Heart Disease as the probability of Heart Disease in you is {percentage}% 😲.")
-                col1, col2 = st.columns(2)
-                with col1:
-                    st.markdown("![Bad](https://media4.giphy.com/media/zaMldSPOkLNu9iYgZ6/giphy.gif?cid=29caca75yzsr24jwjoy2f8ze5azrdqka0mlt7untywajjgme&rid=giphy.gif&ct=g)")
+                st.text("Invalid Inputs ⚠️")
+            # ########
 
 
 

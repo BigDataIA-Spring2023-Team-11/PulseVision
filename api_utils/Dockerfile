@@ -7,8 +7,11 @@ RUN pip install --upgrade pip
 WORKDIR /app
 # Change working dir to app
 
-COPY /requirements.txt /api_main.py
-
+#COPY requirements.txt /app/
+ADD requirements.txt api_main.py /app/
+#
+#COPY ./requirements.txt /app
+#COPY ./requirements.txt /app/
 #COPY ../sql_util /app/sql_util
 
 # COPY pages /app/pages
@@ -18,10 +21,8 @@ RUN pip install -r requirements.txt
 # Install the required dependencies
 
 EXPOSE 8000
-# Expose a port inside the container on which services run
+# Expose a port inside t  he container on which services run
 
 #CMD ["uvicorn","API:app","--host","0.0.0.0"]
 # Start the FastAPI server with Gunicorn
 CMD ["gunicorn" ,"-w", "4", "-k", "uvicorn.workers.UvicornWorker" , "--bind", "0.0.0.0:8000", "api_main:app"]
-
-#CMD ["uvicorn", "API:app", "--host", "0.0.0.0", "--port", "8091"]

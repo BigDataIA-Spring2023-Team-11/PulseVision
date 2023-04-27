@@ -61,7 +61,7 @@ image_file = path+'/images/red_bg.jpeg'
 # add_bg_from_local(bgimage_link)
 
 # Model Path
-MODEL_PATH = path+"/model/rf_model_to_predict_heartDisease"
+MODEL_PATH = path+"/model/model"
 
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as image_file:
@@ -248,7 +248,7 @@ def predict_heart_disease():
                     # with col2:
     # st.title("")
 
-    log_model = pickle.load(open(MODEL_PATH, "rb"))
+    # log_model = pickle.load(open(MODEL_PATH, "rb"))
 
 
     if predict:
@@ -268,10 +268,35 @@ def predict_heart_disease():
 
             ########
             # Send a POST request to the API
-            response = requests.post(endpoint, files={'data': df.to_csv(index=False)})
+            payload = json.dumps({
+                "AgeCategory": 0,
+                "Stroke": 0,
+                "Diabetic_Yes": 0,
+                "KidneyDisease": 0,
+                "Smoking": 0,
+                "SkinCancer": 0,
+                "Is_Male": 0,
+                "BMI": 0,
+                "Asthma": 0,
+                "Race_White": 0,
+                "AlcoholDrinking": 0,
+                "GenHealth": 0
+            })
+            headers = {
+                'Content-Type': 'application/json'
+            }
+            url = f"{endpoint}"
+            st.markdown(url)
+            response = requests.request("POST", url, headers=headers, data=payload)
+            st.markdown(response)
+            if response.status_code == 200:
+                json_data = json.loads(response.text)
+                st.json(json_data)
+            else:
+                st.text("Invalid Inputs ⚠️")
             prediction = response.json().get("prediction")
             percentage = response.json().get("percentage")
-            ########
+            # ########
             if prediction ==0:
                 st.subheader(f"You are Healthy💕! - Dr. RandomForest.")
                 st.write(f"You are LESS prone to Heart Disease as the probability of Heart Disease in you is {percentage}%.")

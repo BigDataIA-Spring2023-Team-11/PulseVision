@@ -55,7 +55,7 @@ def get_answers_to_ques(ques):
 def interpret_predictions_runtime(df):
     shap.initjs()
     # Lets load the model from pickle file
-    filename = "rf_model_to_predict_heartDisease"
+    filename = "model"
     with open(filename, 'rb') as f:
         model = pickle.load(f)
     df_test = pd.read_csv("test_dataset.csv")

@@ -28,5 +28,5 @@ jobs:
           context: ./api_utils #path to Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/project_fastapi:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/project_fastapi:${{ steps.commit.outputs.short }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/fastapi:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/fastapi:${{ steps.commit.outputs.short }}

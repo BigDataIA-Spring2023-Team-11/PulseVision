@@ -27,11 +27,11 @@ jobs:
         pip install pipenv
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    -name: fastapi
-      working_directory: ./api_utils
-     run: |
+    - name: fastapi
+      working-directory: ./api_utils
+      run: |
         uvicorn api_main:app --reload
     - name: Run tests
-      working_directory: ./api_utils
+      working-directory: ./api_utils
       run: |
         pipenv run pytest -v

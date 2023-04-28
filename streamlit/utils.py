@@ -4,11 +4,16 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import io
 import os
+import time
 import openai
 from dotenv import load_dotenv
-
+import boto3
 load_dotenv()
-
+s3_logs = boto3.client('logs',
+                        region_name='us-east-1',
+                        aws_access_key_id = os.environ.get('ACCESS_KEY'),
+                        aws_secret_access_key = os.environ.get('SECRET_KEY')
+                        )
 def global_interpretibility_plot():
     shap.initjs()
     # Lets load the model from pickle file
@@ -49,6 +54,7 @@ def get_answers_to_ques(ques):
     print(response)
 
     return response.choices[0].text.strip()
+    # return ""
 """
 
 """
@@ -65,5 +71,46 @@ def interpret_predictions_runtime(df):
     shap_values = explainer.shap_values(df)
     return shap.plots.force(explainer.expected_value[1], shap_values[1], df)
     # shap.summary_plot(shap_values[1], df.iloc[[3]])
+
+"""
+writing logs to cloudwatch
+"""
+def write_logs_to_cloudwatch(message: str, log_stream):
+    s3_logs.put_log_events(
+        logGroupName = "pulse-vision-logs",
+        logStreamName = log_stream,
+        logEvents = [
+            {
+                'timestamp' : int(time.time() * 1e3),
+                'message' : message
+            }
+        ]
+    )
+
+def read_register_user_logs():
+
+    log_group_name = "pulse-vision-logs"
+    log_stream_name = 'registration-logs'
+    # Set start time to the beginning of the log stream
+
+    # Initialize an empty list to store log events
+    # Call get_log_events to retrieve all log events from the log stream
+    response = s3_logs.get_log_events(
+        logGroupName=log_group_name,
+        logStreamName=log_stream_name,
+    )
+
+    # Extract the timestamp and message from each log event
+    timestamps = []
+    messages = []
+    for event in response['events']:
+        timestamps.append(event['timestamp'])
+        messages.append(event['message'])
+
+    # Split each message into its components and store them in a DataFrame
+    df = pd.DataFrame([m.split('###') for m in messages], columns=['name', 'email', 'password'])
+    df['timestamp'] = pd.to_datetime(timestamps, unit='ms')
+    return df
+
 if __name__ == "__main__":
     get_answers_to_ques("How to improve general health and reduce the risk of heart disease")

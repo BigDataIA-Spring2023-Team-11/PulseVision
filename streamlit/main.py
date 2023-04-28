@@ -2,8 +2,11 @@ import io
 import json
 
 import pandas as pd
+import datetime
+import re
 
 import base64
+import plotly.express as px
 
 import pickle
 # all other imports
@@ -14,21 +17,65 @@ import streamlit_shap as st_shap
 import streamlit as st
 import shap
 import streamlit.components.v1 as components
+from streamlit_lottie import st_lottie
 
-from utils import get_answers_to_ques
+# from loginpage import login, registration
+from utils import get_answers_to_ques, write_logs_to_cloudwatch, read_register_user_logs
 
+import streamlit as st
+import time
+import boto3
+from dotenv import load_dotenv
+import os
+import subprocess
+import hashlib
+import json
+import altair as alt
+
+import base64
 ###############################################################################
-
+load_dotenv()
 # The code below is for the layout of the page
 if "widen" not in st.session_state:
     layout = "centered"
 else:
     layout = "wide" if st.session_state.widen else "centered"
+
+if 'logged_in' not in st.session_state:
+    st.session_state.logged_in = False
+
 if 'predict' not in st.session_state:
     st.session_state.predict = False
+
+# Create a CloudWatch Logs client
+# Set all credentials and variables
+aws_access_key_id = os.getenv('ACCESS_KEY')
+aws_secret_access_key = os.getenv('SECRET_KEY')
+
+client = boto3.client('logs',region_name="us-east-1",
+                      aws_access_key_id=aws_access_key_id,
+                      aws_secret_access_key=aws_secret_access_key)
+
+# Define the CloudWatch Logs group and log stream name
+log_group_name = 'pulse-vision-logs'
+log_stream_name = 'registration-logs'
+
+# Define a variable to hold the logged in user's details
+logged_in_user = None
+
 path = os.path.dirname(__file__)
 
 
+
+
+def load_lottiefile(filepath:str):
+    with open(filepath,"r") as f:
+        return json.load(f)
+def load_lottieurl(url:str):
+    r = requests.get(url)
+    if r.status_code !=200:
+        return None
+    return r.json()
 st.set_page_config(
     layout=layout,
     page_title='Heart Disease Prediction App',  # String or None. Strings get appended with "• Streamlit".
@@ -49,7 +96,7 @@ age_df = pd.DataFrame({'AgeCategory' : data.keys() , 'AgeValue' : data.values() 
 # bgimage_link = "https://drive.google.com/file/d/1qpO3e_leNXN30DVMkTRo7-LjyxA2lvzY/view?usp=share_link"
 # Image from Local
 path = os.path.dirname(__file__)
-image_file = path+'/images/red_bg.jpeg'
+image_file = path+'/images/white_gred.jpeg'
 
 # Image from link
 # add_bg_from_local(bgimage_link)
@@ -122,8 +169,7 @@ def predict_heart_disease():
 
     endpoint = config['endpoints']['predict']
     add_bg_from_local(image_file)
-
-    st.title("Heart Disease Prediction App")
+    st.title("PULSE VISION")
     st.markdown("Are you worried about the condition of your heart? "
                  "This app will help you to diagnose it!")
 
@@ -201,7 +247,16 @@ def predict_heart_disease():
         bmi_key = st.selectbox(
             "BMI",
             options= ['UnderWeight', 'NormalWeight', 'OverWeight', 'Obesity Class I', "Obesity Class II", "Obesity Class III"],
-            help = "Please choose respective BMI category!",
+            help = """Please choose respective BMI category! 
+            
+            BMI < 18.5 ---> UnderWeight'
+            18.5 <= BMI <= 25 ---> NormalWeight'
+            25 <= BMI <= 30 ---> OverWeight'
+            30 <= BMI <= 35 ---> Obesity Class I'
+            35 <= BMI <= 40 ---> Obesity Class II'
+            40 <= BMI ---> Obesity Class III'
+                    
+            """,
         )
 
     st.subheader("Critical Health Issues:")
@@ -231,31 +286,39 @@ def predict_heart_disease():
     food = None
     exercise = None
     if (health_key == "Poor" or health_key == "Fair"):
-        st.markdown("Please select from below dropdown")
+        st.subheader("Please select from below dropdown")
         food_habits = ["junk", "greens", "fibre rich", "protein", "balanced diet"]
         exe = ["I exercise regularly", "I exercise few days a week", "I do not exercise"]
-        food = st.selectbox("food Habits", food_habits)
+        food = st.selectbox("Food Habits", food_habits)
         exercise = st.selectbox("Physical Activity", exe)
     col8, col9, col10 = st.columns(3)
     with col8:
         predict = st.button("Predict my Heart Condition!")
-                    # with col2:
-    # st.title("")
 
-    # log_model = pickle.load(open(MODEL_PATH, "rb"))
+    colored_red = f"<span style='color:red'>RED</span>"
+    colored_blue = f"<span style='color:blue'>BLUE</span>"
+
+    def bar_char_altair(df, color):
+        # Create the chart
+        df = df.sort_values(by= "% Contribution", ascending=False).reset_index(drop=True)
+
+        chart = alt.Chart(df).mark_bar().encode(
+            x=alt.X('features', sort='-y'),
+            y=alt.Y("% Contribution", axis=alt.Axis(format=',.0f', title='Value')),
+            color=alt.condition(
+                alt.datum.Value > 0,
+                alt.value('red'),  # Positive values will be green
+                alt.value(color)  # Negative values will be red
+            )
+        ).properties(width=600, height=00)
+        return chart
+
 
 
     if predict:
         st.session_state.predict = True
         if st.session_state.predict:
             df = featuresTransformations_to_df(agecat_key, bmi_key, gender, race, smoking, alcohol, health_key, diabetic, asthma, stroke, skincancer, kidneydisease)
-            # df_to_cal = featuresTransformations_to_df(agecat_key, bmi_key, gender, race, smoking, alcohol, health_key, diabetic, asthma, stroke, skincancer, kidneydisease)
-            # df.to_csv("data/df.csv")
-            ############ commented for API call
-            # prediction = log_model.predict(df)
-            # prediction_prob = log_model.predict_proba(df)
-            # likelihood = (100*(prediction_prob[0][1]/prediction_prob[0][0]))
-            # percentage = (100*prediction_prob[0][1]).round(0)
             #############
 
             # url_p = "http://localhost:8000/get_predictions"
@@ -276,24 +339,22 @@ def predict_heart_disease():
                 "AlcoholDrinking": int(df.AlcoholDrinking[0]),
                 "GenHealth": int(df.GenHealth[0])
             })
-            st.markdown(payload)
+            # st.markdown(payload)
             headers = {
                 'Content-Type': 'application/json'
             }
             url = f"{endpoint}"
-            st.markdown(url)
             response = requests.request("POST", url, headers=headers, data=payload)
-            st.markdown(response)
 
             if response.status_code == 200:
                 json_data = json.loads(response.text)
-                st.json(json_data)
+                # st.json(json_data)
 
                 prediction = response.json().get("prediction")
-                percentage = response.json().get("prediction_proba")
+                percentage = response.json().get("prediction_probability")
                 if prediction == 0:
                     st.subheader(f"You are Healthy💕! - Dr. RandomForest.")
-                    st.write(
+                    st.info(
                         f"You are LESS prone to Heart Disease as the probability of Heart Disease in you is {percentage}%.")
                     col1, col2 = st.columns(2)
                     with col1:
@@ -301,7 +362,7 @@ def predict_heart_disease():
 
                 else:
                     st.subheader("You are not Healthy 😐, better go for a checkup - Dr. RandomForest.")
-                    st.write(
+                    st.warning(
                         f"You are Highly prone to Heart Disease as the probability of Heart Disease in you is {percentage}% 😲.")
                     col1, col2 = st.columns(2)
                     with col1:
@@ -335,42 +396,47 @@ def predict_heart_disease():
             df = df.rename(columns=col_names)
 
             st_shap(shap.force_plot(explainer.expected_value[1], shap_values[1], df))
+            # st_shap(shap.plots.waterfall(explainer.expected_value[1], shap_values[1]), height=300)
+
+            st.markdown(
+                f"""***Graph Represents Impact of each Feature on the Heart Disease Prediction:***\n1. Features Highlighted in **{colored_red}** indicate an **Increase** in their Impact on Heart Disease.\n2. Features Highlighted in **{colored_blue}** indicate a **Decrease** in their Impact on Heart Disease.\n3. **Longer** bars indicate a **Greater Impact** on Heart Disease, and **Arrows** show the **Direction of the Impact**.\n4. Features are ordered based on their overall Impact.
+            """, unsafe_allow_html=True)
             shap_df = pd.DataFrame(shap_values[1]) ##shap values are 2d array in which 1st position has shap values of heart disease(YES)
             shap_df.columns = df.columns
             # Shap Values to a DataFrame
-
+            st.markdown("")
             tdf = shap_df.T
             tdf = tdf.reset_index()
             tdf.columns = ['features', 'shap_values']
             # tdf['abs_ShapValues'] = abs(tdf['shap_values'])
             tdf = tdf.sort_values('shap_values', ascending=False).reset_index(drop=True)
-            tdf
-            causing_heartdisease = tdf["features"].unique().tolist()[:3]
-            t = tdf["features"].unique().tolist()
-            st.markdown('<p style="color:black;font-size:30px">Top 3 factors indicating that they have the strongest impact on the model prediction:</p>', unsafe_allow_html=True)
-            st.markdown(f'<p style="color:white;font-size:25px">1. {causing_heartdisease[0]}</p>', unsafe_allow_html=True)
-            st.markdown(f'<p style="color:white;font-size:25px">2. {causing_heartdisease[1]}</p>', unsafe_allow_html=True)
-            st.markdown(f'<p style="color:white;font-size:25px">3. {causing_heartdisease[2]}</p>', unsafe_allow_html=True)
+            tdf["% Contribution"] = abs(tdf["shap_values"] / abs(tdf["shap_values"]).sum() * 100)
+            # tdf
+            # All Positive impact features
+            positive_chart = bar_char_altair(tdf[tdf.shap_values > 0].iloc[:3,:], '#f21365')
+            # All Negative impact features
+            negative_chart = bar_char_altair(tdf[tdf.shap_values < 0].iloc[-3:, :], '#1e8ce6')
 
-            st.markdown(
-                '<p style="color:black;font-size:30px">Three factors that are reducing the chances of heart disease for you:</p>',
-                unsafe_allow_html=True)
-            st.markdown(f'<p style="color:white;font-size:25px">1. {t[-1]}</p>', unsafe_allow_html=True)
-            st.markdown(f'<p style="color:white;font-size:25px">2. {t[-2]}</p>', unsafe_allow_html=True)
-            st.markdown(f'<p style="color:white;font-size:25px">3. {t[-3]}</p>', unsafe_allow_html=True)
-            st.markdown("")
-            st.markdown("")
-            st.markdown("")
-            st.markdown("")
+            # Display the chart in Streamlit
+            st.subheader("Top features that have Positive Impact: (Increasing the Chances of Heart Disease)")
+            st.altair_chart(positive_chart, use_container_width=True)
+
+            st.subheader("Top features that have Negative Impact: (Reducing the Chances of Heart Disease)")
+            st.altair_chart(negative_chart, use_container_width=True)
+            top_features = tdf[tdf.shap_values > 0]["features"].unique().tolist()
+            st.subheader("Top 3 factors indicating that they have the Strongest Impact on the Heart Disease")
+            features_cant_change = ["Race_White","Is_Male","Age"]
+            for feature in top_features[:3]:
+                if feature not in features_cant_change:
+                    st.markdown(f'<p style="color:red;font-size:25px">- {feature}</p>',
+                            unsafe_allow_html=True)
             st.markdown("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
-            st.markdown("")
-            st.markdown("")
-            st.markdown("")
+
             st.markdown(
                 '<p style="color:black;font-size:30px">Here is what you can do to improve your heart health!</p>',
                 unsafe_allow_html=True)
 
-            if "General_Health" in causing_heartdisease:
+            if "General_Health" in top_features[:3]:
 
                 with st.expander("To Improve General Health"):
                     if food !="":
@@ -380,19 +446,19 @@ def predict_heart_disease():
                         res_no_food = get_answers_to_ques(
                             f"How to improve general health and reduce the risk of heart disease? ")
                         st.write(res_no_food)
-            if "Kidney_Disease" in causing_heartdisease:
+            if "Kidney_Disease" in top_features[:3]:
                 with st.expander("Kidney Disease"):
                     res_kidney = get_answers_to_ques("What is the effect of kidney disease on heart disease and how to get rid of kidney disease")
                     st.markdown(res_kidney)
-            if "Stroke" in causing_heartdisease:
+            if "Stroke" in top_features[:3]:
                 with st.expander("Stroke"):
                     res_stroke = get_answers_to_ques("I already got a heart stroke and what can be done to avoid heart strokes in future. help me with detailed precautions")
                     st.markdown(res_stroke)
-            if "Diabetic" in causing_heartdisease:
+            if "Diabetic" in top_features[:3]:
                 with st.expander("If Diabetic"):
                     st.write("""Diabetes is a well-known risk factor for heart disease, and having diabetes can increase the risk of developing heart disease. This is because high blood sugar levels over time can damage blood vessels and increase the risk of atherosclerosis, which is the build-up of plaque in the arteries.
                     Therefore, it is important for individuals with diabetes to manage their blood sugar levels and other risk factors for heart disease through lifestyle changes, such as maintaining a healthy diet, engaging in regular exercise, and quitting smoking if they smoke.""")
-            if "BMI" in causing_heartdisease:
+            if "BMI" in top_features[:3]:
                 with st.expander("BMI"):
                     bmi_categories = ['Underweight', 'Normal weight', 'Overweight', 'Obesity class I',
                                       'Obesity class II', 'Obesity class III']
@@ -401,20 +467,41 @@ def predict_heart_disease():
                     bmi_df = pd.DataFrame({'BMI Category': bmi_categories, 'BMI Range': bmi_ranges})
                     st.write(bmi_df)
                     st.write("""To stay healthy and reduce the risk of heart disease, it is important to check your BMI and ensure that it falls within the appropriate category. Please refer to the BMI table to determine your category.""")
-            if "Alcoholic" in causing_heartdisease:
+            if "Alcoholic" in top_features[:3]:
                 with st.expander("If Alcoholic"):
                     res_alc = get_answers_to_ques(
                         "Does drinking alcohol have effect on causing heart disease? if yes, to what extent?")
                     st.markdown(res_alc)
-            if "Smoking" in causing_heartdisease:
+            if "Smoking" in top_features[:3]:
                 with st.expander("Smoking"):
                     res_smoking = get_answers_to_ques(
                         "what is the effect of smoking on heart disease? How to avoid smoking?")
                     st.markdown(res_smoking)
+            if "Asthma" in top_features[:3]:
+                with st.expander("Asthma"):
+                    res_asth = get_answers_to_ques(
+                        "How to get rid of asthma to prevent heart disease?")
+                    st.markdown(res_asth)
 
 ########################################################################################
-def analytics():
+def Insights():
     st.image(f"{path}/images/global_interpret.png")
+    st.markdown("")
+    st.markdown("")
+    st.markdown("")
+    st.subheader(
+        f"""***Graph Represents Impact of each Feature on the Heart Disease Prediction:***""")
+    st.markdown("""
+    - One of the most significant factors is age, with older people having a higher risk than younger people
+    
+- Poor general health, a history of stroke, kidney disease,Skin cancer, Asthma and diabetes can also increase the likelihood of developing heart disease
+
+- Gender is also a factor, with men being at higher risk than women. However, it's important to note that these factors don't guarantee that someone will develop heart disease, but they do increase the probability
+
+- In terms of alcohol consumption, moderate drinking can have some protective effects on the heart and circulatory system, but heavy drinking can be harmful and is a major cause of preventable death
+
+ Understanding these factors and their relationships can help individuals make informed decisions about their lifestyle choices and healthcare providers identify individuals who may be at higher risk of heart disease. By taking appropriate measures, such as adopting a healthier lifestyle, managing chronic conditions like diabetes, and seeking medical treatment if necessary, individuals can reduce their risk of developing heart disease.
+    """)
 
 def bmi_calculator():
     # Set the title of the app
@@ -424,60 +511,318 @@ def bmi_calculator():
     weight = st.number_input("Enter your weight (in kg)")
     height = st.number_input("Enter your height (in cm)")
 
+    # st.markdown(f"{height} --> {type(height)} --> {height > }")
     # Create a button to calculate the BMI
     if st.button("Calculate BMI"):
-        # Convert height from cm to meters
-        height_m = height / 100
-        # Calculate the BMI
-        bmi = weight / (height_m ** 2)
-        # Display the BMI
-        st.write(f"Your BMI is {bmi:.2f}")
-        # Determine the category and display it
-        if bmi < 18.5:
-            st.write("You are underweight.")
-        elif bmi < 25:
-            st.write("You have a normal weight.")
-        elif bmi < 30:
-            st.write("You are overweight.")
-        elif bmi < 35:
-            st.write("You are in obesity class I.")
-        elif bmi < 40:
-            st.write("You are in obesity class II.")
+        if int(height) <= 0 & int(weight) <= 0:
+            st.error("Please Provide Valid Information!.")
         else:
-            st.write("You are in obesity class III.")
+            # if height.astype('float') > 0 & weight.astype('float') > 0:
+            # Convert height from cm to meters
+            height_m = height / 100
+            # Calculate the BMI
+            bmi = weight / (height_m ** 2)
+            # Display the BMI
+            st.write(f"Your BMI is {bmi:.2f}")
+            # Determine the category and display it
+            if bmi < 18.5:
+                st.info("You are underweight.")
+            elif bmi < 25:
+                st.info("You have a normal weight.")
+            elif bmi < 30:
+                st.info("You are overweight.")
+            elif bmi < 35:
+                st.info("You are in obesity class I.")
+            elif bmi < 40:
+                st.info("You are in obesity class II.")
+            else:
+                st.info("You are in obesity class III.")
 
+    # Define a function to get the log events from CloudWatch
+def get_log_events():
+    end_time = int(datetime.datetime.now().timestamp()) * 1000
+    start_time = int((datetime.datetime.now() - datetime.timedelta(days=5)).timestamp()) * 1000
+
+    response = client.get_log_events(
+        logGroupName=log_group_name,
+        logStreamName=log_stream_name,
+        # startTime=start_time,
+        # endTime=end_time
+        startFromHead=True
+    )
+
+    log_events = []
+    for event in response['events']:
+        message = event['message']
+        log_events.append(message)
+
+    st.markdown(f"{len(log_events)} --> {log_events} ---> log events")
+
+    # dict_ = dict(item.split("=") for item in string.split(", "))
+    #
+    # # Convert the dictionary to a dataframe
+    # df = pd.DataFrame(dict_, index=[0])[["name", "email", "password_hash"]]
+    #
+    # df = pd.DataFrame([m.split('///') for m in messages], columns=['email', 'username', 'password', 'plan'])
+    # df['timestamp'] = pd.to_datetime(timestamps, unit='ms')
+
+    return log_events
+
+def registration():
+    st.markdown(
+        "<h3 style='text-align: center'><span style='color: #2A76BE;'>Registration Page</span></h3>",
+        unsafe_allow_html=True)
+
+    with st.form("Registration Form"):
+        # Get user details
+        name = st.text_input("Name")
+        email = st.text_input("Email")
+        password = st.text_input("Password", type='password')
+        confirm_password = st.text_input("Confirm Password", type='password')
+
+        # Hash the password using SHA-256
+        password_hash = hashlib.sha256(password.encode()).hexdigest()
+
+        submit_button = st.form_submit_button(label="Register")
+
+        if submit_button:
+            # if name.strip() == "" or email.strip() == "" or password.strip() == "" or confirm_password.strip() == "":
+            #     st.error("Please fill out all fields")
+            # elif password != confirm_password:
+            #     st.error('Passwords do not match')
+            # else:
+            #     # Check if user already exists
+            #     user_exists = check_if_user_exists(email)
+            #
+            #     if user_exists == "exists":
+            #         st.error('User with this email already exists')
+            #     else:
+            #         # Save user details to database
+            #         write_logs_to_cloudwatch(f"{name}###{email}###{password_hash}","registration-logs")
+            #         # save_user_details(name, email, password_hash)
+            #         st.success('Registration successful')
+#     ----------------------- Commented for using other logic
+            email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+            password_regex = r"^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{5,}$"
+            user_exists = check_if_user_exists(email)
+
+            if re.match(email_regex, email) == None:
+                st.error("Please enter valid Email")
+            elif user_exists == 'exists':
+                st.error("User Already Exists")
+            elif password != confirm_password:
+                st.error('Passwords do not Match')
+            elif re.match(password_regex, password) == None:
+                st.error('Please enter valid Password (Length of at least 5, at least 1 Uppercase Letter and 1 Number)')
+            elif (name != "" and password != "" and email != "" and confirm_password != ""):
+                write_logs_to_cloudwatch(f"{name}###{email}###{password_hash}", "registration-logs")
+                # save_user_details(name, email, password_hash)
+                st.success('Registration successful')
+
+                #
+                # # username_unique_flag = check_username_doesnot_exists(username)
+                # # st.markdown(f"USERNAME Unique --> {username_unique_flag}")
+                # # Validate each email address before inserting it into the table
+                # # for row in data:
+                # #     email = row[0]
+                #
+                # if user_exists == 'not_exists':
+                #     # Save user details to database
+                #
+                #
+                # else:
+                #     st.error(f"User Already Exists!")
+
+
+            else:
+                st.info("Please Provide Valid Credentials")
+
+
+# def check_user_exists(email):
+#     # Retrieve the log events from CloudWatch
+#     user_credentials = get_user_details(email)
+#     if email == user_credentials["email"]:
+#         return True
+#     return False
+
+
+
+def check_if_user_exists(email):
+    df = read_register_user_logs()
+    # st.markdown(df)
+    if email in df.email.unique().tolist():
+        return "exists"
+    else:
+        return "not_exists"
+
+def save_user_details(name, email, password_hash):
+    # Save user details to CloudWatch Logs
+    message = f'New user registered: name={name}, email={email}, password_hash={password_hash}'
+    response = client.put_log_events(
+        logGroupName=log_group_name,
+        logStreamName=log_stream_name,
+        logEvents=[
+            {
+                'timestamp': int(time.time() * 1000),
+                'message': message
+            }
+        ]
+    )
+
+# Create a function for the login page
+def login():
+    st.markdown(
+        "<h3 style='text-align: center'><span style='color: #2A76BE;'>Login Page</span></h3>",
+        unsafe_allow_html=True)
+
+    # Get user details
+    username = st.text_input("Email")
+    password = st.text_input("Password", type='password')
+
+    # Hash the password entered by the user
+    password_hash = hashlib.sha256(password.encode()).hexdigest()
+
+    # Login user on form submission
+    if st.button('Login'):
+        # Validate user credentials
+        if username != "" and password != "":
+
+            df = read_register_user_logs()
+            # st.markdown(df[df.email == username].shape[0])
+            if df[df.email == username].shape[0] > 0:
+                # st.markdown(f"{df[df.email == username]['password'][0]} --> {df[df.email == username]['password']} --> {len(df[df.email == username]['password'].tolist())}")
+                # st.dataframe(df[df.email == username])
+                # st.markdown(df[df.email == username]['password'].tolist()[0])
+                pwd = df[df.email == username]['password'].tolist()[0]
+                if pwd == password_hash:
+                    st.success("Valid Credentials, User logged in!")
+                    st.session_state.logged_in = True
+                    #     st.session_state.logged_in_user = logged_in_user
+                else:
+                    st.error("Username does not exist!")
+            else:
+                st.error("Invalid User!")
+        # user_credentials = validate_credentials(username, password_hash)
+        # if user_credentials is not None:
+        #     user = get_user_details(username)
+        #     global logged_in_user
+        #     logged_in_user = {"email": user["email"], "name": user["name"]}
+        #     print(f" in login : {logged_in_user}")
+        #     st.success('Login successful')
+        #     st.session_state.logged_in = True
+        #     st.session_state.logged_in_user = logged_in_user
+        #     message = f'User login success: username={username}'
+        #     response = client.put_log_events(
+        #         logGroupName=log_group_name,
+        #         logStreamName="login-logs",
+        #         logEvents=[
+        #             {
+        #                 'timestamp': int(time.time() * 1000),
+        #                 'message': message
+        #             }
+        #         ]
+        #     )
+
+        else:
+            st.error('Invalid username or password')
+            # message = f'User login failed: username={username}'
+            # # response = client.put_log_events(
+            # #     logGroupName=log_group_name,
+            # #     logStreamName="login-logs",
+            # #     logEvents=[
+            # #         {
+            # #             'timestamp': int(time.time() * 1000),
+            # #             'message': message
+            # #         }
+            # #     ]
+            # # )
+
+def get_user_details(username):
+    log_events = get_log_events()
+
+    # Parse the log events to extract the relevant user credentials
+    st.markdown(f"{len(log_events)} --> {log_events} ---> log events")
+    user_credentials = {}
+    for log_event in log_events:
+        if 'New user registered' in log_event:
+            cred = log_event.split(", ")
+            email = cred[1].split("=")
+            st.markdown(f"{cred},{email}-------------------??????")
+            if email[1] == username:
+                credentials = log_event.split(': ')[1]
+                credentials = credentials.split(', ')
+                for credential in credentials:
+                    key, value = credential.split('=')
+                    user_credentials[key] = value
+    st.markdown(f"{user_credentials}-------> credentials")
+    return user_credentials
+
+# Define a function to validate the login credentials
+def validate_credentials(username, password_hash):
+    user_credentials = get_user_details(username)
+    # Check if the provided credentials match the registered user credentials
+    if username == user_credentials['email'] and password_hash == user_credentials['password_hash']:
+        return user_credentials
+    else:
+        return None
 
 if __name__ == '__main__':
 
-    selected_operation = st.sidebar.radio("Select a Operation",  ["Homepage", "Predict Heart Health", "Analytics","BMI Calculator"])
+    selected_operation = st.sidebar.radio("Select a Operation",
+                                          ["Login", "Registration", "Homepage", "Predict Heart Health", "Insigths",
+                                           "BMI Calculator"])
 
-    if selected_operation == "Predict Heart Health":
-        st.markdown('')
-        predict_heart_disease()
+    if selected_operation == "Logout":
+        st.session_state.logged_in = False
+        st.experimental_set_query_params(logged_in=False)
+        st.success("Logged out successfully")
+    elif selected_operation == "Login":
+        if st.session_state.logged_in:
+            st.markdown("Active User Found!")
+        else:
+            st.session_state.logged_in = False
+            login()
+    elif selected_operation == "Registration":
+        if st.session_state.logged_in:
+            st.success("Active User Found!")
+        else:
+            st.session_state.logged_in = False
+            registration()
 
-    elif selected_operation == "BMI Calculator":
-        bmi_calculator()
+    # Lets say a USER Logged-In
+    if st.session_state.logged_in:
+        lo_btn = st.sidebar.button("Logout")
+        if selected_operation == "Predict Heart Health":
+            st.markdown('')
+            predict_heart_disease()
 
-    elif selected_operation == "Homepage":
-        st.markdown('')
-        st.markdown('')
-        st.markdown('')
-        # col1,col2 = st.columns([1,1])
-        # with col1:
-        st.markdown('This project is designed to provide an efficient way to comprehend meeting content. By enabling users to upload an audio file of their choice for transcription, they can easily review and analyze meeting transcripts. Additionally, the project allows users to ask questions related to the meeting content, making it a comprehensive tool for extracting useful insights.')
-        # with col2:
-        lottie_img = load_lottieurl("https://assets2.lottiefiles.com/packages/lf20_7mpsnbrj.json")
-        st_lottie(
-            lottie_img,
-            speed=1,
-            reverse=False,
-            loop=True,
-            height="450px",
-            width=None,
-            key=None,
-        )
+        elif selected_operation == "BMI Calculator":
+            bmi_calculator()
+
+        elif selected_operation == "Homepage":
+            st.title("PULSE VISION")
+            st.markdown("""Pulse Vision is an essential tool for anyone who wants to maintain or improve their heart health. Heart disease is one of the leading causes of death worldwide, and many risk factors for heart disease can be managed or even prevented through lifestyle changes. However, it can be difficult to know where to start, and many people may not realize the impact that their daily habits have on their heart health.""")
+            st.markdown("""That's where Pulse Vision comes in. By providing a simple and intuitive way to assess heart-disease risk and track progress over time, the app empowers individuals to take charge of their heart health. With personalized recommendations based on individual risk factors and lifestyle habits, users can make informed decisions about their health and take proactive steps towards a healthier heart.""")
+            # with col2:
+            lottie_img = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_GZVTNZ.json")
+            st_lottie(
+                lottie_img,
+                speed=1,
+                reverse=False,
+                loop=True,
+                height="450px",
+                width=None,
+                key=None,
+            )
+
+        elif selected_operation == 'Insigths':
+            st.title('Global Interpretation')
+            Insights()
+
+
+        if lo_btn:
+            st.success("User Logged-out Successfully!")
+            st.session_state.logged_in = False
+
     else:
-        st.markdown('')
-        st.markdown('')
-        st.markdown('')
-        analytics()
+        st.warning("Please Log-In to get access")

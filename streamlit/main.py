@@ -276,14 +276,14 @@ def predict_heart_disease():
                 "AlcoholDrinking": int(df.AlcoholDrinking[0]),
                 "GenHealth": int(df.GenHealth[0])
             })
-            st.markdown(payload)
+            # st.markdown(payload)
             headers = {
                 'Content-Type': 'application/json'
             }
             url = f"{endpoint}"
-            st.markdown(url)
+            # st.markdown(url)
             response = requests.request("POST", url, headers=headers, data=payload)
-            st.markdown(response)
+            # st.markdown(response)
 
             if response.status_code == 200:
                 json_data = json.loads(response.text)
@@ -335,6 +335,12 @@ def predict_heart_disease():
             df = df.rename(columns=col_names)
 
             st_shap(shap.force_plot(explainer.expected_value[1], shap_values[1], df))
+            st.info(f"""Graphical Representation of the SHAP displays the impact of each feature on the model's output for a given instance
+            1. The Expected Probability of facing Heart Disease: {explainer.expected_value[1]}, where as the Predicted Probability of facing Heart Disease: {percentage},
+            2. All the Blue colors features are reducing the chances of Heart Disease, where as Purple/Pink color features increases the chances of Heart Disease.
+            3. 
+            
+            """)
             shap_df = pd.DataFrame(shap_values[1]) ##shap values are 2d array in which 1st position has shap values of heart disease(YES)
             shap_df.columns = df.columns
             # Shap Values to a DataFrame
@@ -426,26 +432,28 @@ def bmi_calculator():
 
     # Create a button to calculate the BMI
     if st.button("Calculate BMI"):
-        # Convert height from cm to meters
-        height_m = height / 100
-        # Calculate the BMI
-        bmi = weight / (height_m ** 2)
-        # Display the BMI
-        st.write(f"Your BMI is {bmi:.2f}")
-        # Determine the category and display it
-        if bmi < 18.5:
-            st.write("You are underweight.")
-        elif bmi < 25:
-            st.write("You have a normal weight.")
-        elif bmi < 30:
-            st.write("You are overweight.")
-        elif bmi < 35:
-            st.write("You are in obesity class I.")
-        elif bmi < 40:
-            st.write("You are in obesity class II.")
+        if int(height) > 0 & int(weight) > 0:
+            # Convert height from cm to meters
+            height_m = height / 100
+            # Calculate the BMI
+            bmi = weight / (height_m ** 2)
+            # Display the BMI
+            st.write(f"Your BMI is {bmi:.2f}")
+            # Determine the category and display it
+            if bmi < 18.5:
+                st.write("You are underweight.")
+            elif bmi < 25:
+                st.write("You have a normal weight.")
+            elif bmi < 30:
+                st.write("You are overweight.")
+            elif bmi < 35:
+                st.write("You are in obesity class I.")
+            elif bmi < 40:
+                st.write("You are in obesity class II.")
+            else:
+                st.write("You are in obesity class III.")
         else:
-            st.write("You are in obesity class III.")
-
+            st.error("Please Provide Valid Information!.")
 
 if __name__ == '__main__':
 

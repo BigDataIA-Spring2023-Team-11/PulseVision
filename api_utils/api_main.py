@@ -13,7 +13,8 @@ with open('config.json', 'r') as f:
 model_path = config['model']['path']
 MODEL_PATH = path.replace(".","")+model_path
 
-app = FastAPI()
+app = FastAPI(title="Heart Disease Prediction")
+
 
 class UserInput(BaseModel):
     AgeCategory: int
@@ -32,38 +33,22 @@ class UserInput(BaseModel):
 # load model
 model = pickle.load(open(MODEL_PATH, "rb"))
 print(MODEL_PATH,"model____path")
-# app = FastAPI(title="Health App")
 
 
 @app.post('/get_predict', status_code=status.HTTP_200_OK)
 async def predict(userinput: UserInput) -> dict:
     try:
-        # read the input dict into json and then into df
         df = pd.DataFrame([json.loads(userinput.json())])
-        # predict
-        # prediction = model.predict(df)
         prob = model.predict_proba(df)
         prediction = model.predict(df)
-        print(f"{prediction[0]} --------------------------------------------------------000000")
-        # prob = model.predict_proba(df)
 
-        response = {}
-        # # # first prediction value rounded off
-        # response['value_0'] = (prob[0][0] * 100 ).round(0)
-        # # second prediction value rounded off
-        response['prediction_probability'] = (prob[0][1] * 100 ).round(0)
-        response['prediction'] = int(prediction[0])
-        return response
+        response_json = {}
 
-        # prediction = log_model.predict(df)
-        # prediction_prob = log_model.predict_proba(df)
-        # pred_prob = (100 * prob[0][1]).round(0)
-        # return {"prediction": prediction, "prediction_probability": pred_prob}
-
-
-
+        response_json['prediction_probability'] = (prob[0][1] * 100 ).round(0)
+        response_json['prediction'] = int(prediction[0])
+        return response_json
     except:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Cannot Predict, Try again")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Error while predicting!")
 
 # @app.post("/get_predictions")
 # def get_predictions(json_string):

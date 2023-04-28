@@ -30,7 +30,8 @@ The objective of this application is to provide users with tools and information
 The ultimate goal of the application is likely to empower users to make informed decisions about their health and take steps to improve their overall well-being.
 
 ## Architecture Diagram
-![project.png](project.png)
+![image](https://github.com/UKEYBHAKTI002922939/PulseVision-1/blob/main/architecture_Diagram/cloud_architecture.png)
+
 
 ## Components
 This application utilises trusted dataset set sources from CDC, and cleans and models it to provide predictions.

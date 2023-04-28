@@ -35,17 +35,14 @@ pip install diagrams
 3. Generate the image for Initial and Final Architecture Diagram
 
    ```bash
-   python architecture.py
    python cloud_arch.py
    ```
    
    
  The image gets generated in the current working directory(architecture-diagram)
 
- <!-- <imag src="initial_diagram.png" width="300" height="300" /> -->
  
-   ![image](initial_diagram.png)
  
-   <!-- <imag src="cloud_architecture_diagram.png" width="300" height="300" /> -->
+   <!-- <imag src="cloud_architecture.png" width="300" height="300" /> -->
  
-   ![image](final_cloud_architecture_diagram.png)
+   ![image](cloud_architecture.png)

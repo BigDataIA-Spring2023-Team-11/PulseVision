@@ -16,6 +16,7 @@ def data_cleanup(ti):
 
     # Convert the dataframe to CSV and save to S3
     csv_file_path = os.path.join(subfolder_path, "unstructured.csv")
+    df.to_csv(csv_file_path, index=False)
 
     data = pd.read_csv(csv_file_path)
 

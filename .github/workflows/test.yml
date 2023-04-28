@@ -28,7 +28,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     -name: fastapi
-     working_directory: ./api_utils
+      working_directory: ./api_utils
      run: |
         uvicorn api_main:app --reload
     - name: Run tests

@@ -1,0 +1,7 @@
+venv
+.env
+.idea/
+airflow/logs
+airflow/plugins
+airflow/working_dir
+airflow/dags/__pycache__

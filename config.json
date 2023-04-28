@@ -3,6 +3,6 @@
     "predict": "http://localhost:8000/get_predict"
   },
   "model": {
-    "path": "/model/rf_model_to_predict_heartDisease"
+    "path": "model/rf_model_to_predict_heartDisease"
   }
 }

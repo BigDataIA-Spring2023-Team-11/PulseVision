@@ -7,7 +7,7 @@ from fastapi import FastAPI, status, HTTPException
 
 path = os.path.dirname(__file__)
 # Model Path
-MODEL_PATH = path.replace(".","")+"model/rf_model_to_predict_heartDisease"
+MODEL_PATH = path.replace(".","")+"/model/rf_model_to_predict_heartDisease"
 
 app = FastAPI()
 

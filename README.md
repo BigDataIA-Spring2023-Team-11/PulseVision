@@ -117,10 +117,10 @@ WE ATTEST THAT WE HAVEN’T USED ANY OTHER STUDENTS’ WORK IN OUR ASSIGNMENT
 AND ABIDE BY THE POLICIES LISTED IN THE STUDENT HANDBOOK
 Contribution:
 <ul>
-<li>Aakash: 20%</li>
-<li>Bhakti: 20%</li>
-<li>Bhargavi: 40%</li>
-<li>Charu: 20%</li>
+<li>Aakash: 24%</li>
+<li>Bhakti: 24%</li>
+<li>Bhargavi: 28%</li>
+<li>Charu: 24%</li>
 </ul>
 
 

@@ -7,7 +7,11 @@ from fastapi import FastAPI, status, HTTPException
 
 path = os.path.dirname(__file__)
 # Model Path
-MODEL_PATH = path.replace(".","")+"/model/rf_model_to_predict_heartDisease"
+with open('config.json', 'r') as f:
+    config = json.load(f)
+
+model_path = config['model']['path']
+MODEL_PATH = path.replace(".","")+model_path
 
 app = FastAPI()
 
@@ -31,7 +35,7 @@ print(MODEL_PATH,"model____path")
 # app = FastAPI(title="Health App")
 
 
-@app.post('/predict', status_code=status.HTTP_200_OK)
+@app.post('/get_predict', status_code=status.HTTP_200_OK)
 async def predict(userinput: UserInput) -> dict:
     try:
         # read the input dict into json and then into df

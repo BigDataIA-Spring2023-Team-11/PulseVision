@@ -1,0 +1,30 @@
+name: Test API Endpoints
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        pip install pipenv
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Run tests
+      working-directory: ./api_utils
+      run: |
+        pytest test_api.py

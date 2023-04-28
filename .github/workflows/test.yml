@@ -27,5 +27,4 @@ jobs:
     - name: Run tests
       working-directory: ./api_utils
       run: |
-        uvicorn api_main:app --reload
         pipenv run pytest -v

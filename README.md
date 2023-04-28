@@ -6,6 +6,7 @@
 <li>⏰ <a href="http://23.21.117.161:8080/home">Airflow</a> </li>
 <li>📖 <a href="https://codelabs-preview.appspot.com/?file_id=14YRHzjXPtdIUmMqmMg9HLaYiHnN5_9LNUB0Zvr-s294#0">Codelab </a> </li>
 <li> ⏯️  <a href="#">Demo </a> </li>
+<li>📖 <a href="https://github.com/BigDataIA-Spring2023-Team-11/PulseVision/blob/main/Documentation/Pulse%20Vision.pdf">ProjectReport </a> </li>
 </ul>
 
 

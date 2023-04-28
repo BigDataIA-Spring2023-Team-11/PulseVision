@@ -1,3 +1,5 @@
+[![Deploy static content to Pages](https://github.com/UKEYBHAKTI002922939/PulseVision-1/actions/workflows/static.yml/badge.svg)](https://github.com/UKEYBHAKTI002922939/PulseVision-1/actions/workflows/static.yml)
+
 # PulseVision
 
 ### Links
